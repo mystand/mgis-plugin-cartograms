@@ -1,5 +1,49 @@
 .root
   z-index 2
   position absolute
-  top 0
-  right 0
+  top 20px
+  right 20px
+  &:global(.opened)
+    .dropdown
+      transform rotate(180deg)
+
+.panel
+  background white
+  box-shadow 0 0 5px 0 rgba(0, 0, 0, 0.2)
+  box-sizing border-box
+
+.button
+  composes panel
+  width: 280px
+  height 40px
+  line-height 40px
+  padding 0 0 0 40px
+  font-weight bold
+  cursor pointer
+  &:before
+    content ' '
+    background url('./cartogram.svg')
+    width 22px
+    height 13px
+    position absolute
+    top 15px
+    left 10px
+  .dropdown
+    position absolute
+    right 19px
+    top 18px
+
+.list
+  margin 2px 0 0
+  padding 0
+  composes panel
+  list-style none
+  li
+    cursor pointer
+    padding 10px
+    .checkbox
+      margin-right 10px
+    .itemName
+      vertical-align: top
+
+
