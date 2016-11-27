@@ -24,7 +24,6 @@ class Menu extends React.Component {
   }
 
   toggleOpened(value = !this.state.opened) {
-    console.log('123')
     this.setState({ opened: value })
   }
 
@@ -32,6 +31,8 @@ class Menu extends React.Component {
     const { items, currentItemIndex, setCartogram, clearCartogram } = this.props
     const { opened } = this.state
     const classNames = classnames(styles.root, { opened })
+
+    if (items.length === 0) return null
 
     return (
       <div className={ classNames }>

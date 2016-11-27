@@ -12,6 +12,7 @@ const Legend = (props) => {
 
   const propertyDefinition = layer.attributes[currentCartogram.property]
   const units = propertyDefinition.units
+  const colorStops = R.sortBy(({ value }) => value, currentCartogram.colorStops)
 
   return (
     <div className={ styles.root }>
@@ -21,13 +22,23 @@ const Legend = (props) => {
       </div>
       <ul className={ styles.colors }>
         {
-          R.sortBy(({ value }) => value, currentCartogram.colorStops)
-            .map(({ color, value }) => (
+          colorStops.map(({ color, value }, index) => {
+            let label
+            if (index === 0) {
+              label = `< ${colorStops[index + 1].value}`
+            } else if (index === colorStops.length - 1) {
+              label = `> ${colorStops[index].value}`
+            } else {
+              label = `${colorStops[index].value} — ${colorStops[index + 1].value}`
+            }
+
+            return (
               <li key={ value }>
                 <div className={ styles.color } style={ { backgroundColor: color } } />
-                { value }
+                { label }
               </li>
-            ))
+            )
+          })
         }
       </ul>
     </div>

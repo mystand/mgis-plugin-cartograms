@@ -22,7 +22,7 @@ const Popup = (props) => {
 
           return (
             <li key={ feature.id } className={ styles.featureListItem } onClick={ onClick }>
-              {feature.properties.name}: <b>{value}</b>
+              {feature.properties.name}: <b>{R.isNil(value) ? 'Нет данных' : value}</b>
             </li>
           )
         })

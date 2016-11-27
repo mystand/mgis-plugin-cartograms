@@ -1,3 +1,5 @@
+import R from 'ramda'
+
 const CARTOGRAM_LAYER_PREFIX = 'cartogram-layer'
 
 export function buildCartogramLayerId(index) {
@@ -5,7 +7,11 @@ export function buildCartogramLayerId(index) {
 }
 
 function buildStops(stopsConfig) {
-  return stopsConfig.map(({ color, value }) => [value, color])
+  return [
+    ...stopsConfig.map(({ color, value }) => [value, color]),
+      [Number.POSITIVE_INFINITY, R.last(stopsConfig).color],
+      [NaN, '#ffffff']
+  ]
 }
 
 export function buildMapboxLayers(layers, config) {
