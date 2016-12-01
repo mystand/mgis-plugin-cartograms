@@ -1,11 +1,11 @@
+import R from 'ramda'
 import { takeEvery } from 'redux-saga'
-import { select } from 'redux-saga/effects'
-
+import { select, put } from 'redux-saga/effects'
 import { getMap } from 'core/frontend/plugin/api'
 import { MAP_LOADED } from 'core/frontend/client/map/map-actions'
 import * as MapHelper from 'core/frontend/helpers/map-helper'
 
-import { CARTOGRAM_SET, CARTOGRAM_CLEAR } from './actions'
+import { setCartogramDone, CARTOGRAM_SET_PREPARATION, CARTOGRAM_CLEAR } from './actions'
 import { buildCartogramLayerId, buildMapboxLayers } from './utils'
 import Popup from './components/popup/Popup'
 
@@ -16,10 +16,12 @@ function* cartogramSet(action) {
   const map = getMap()
   const { index } = action
   const currentCartogramIndex = yield select(state => state.plugins.cartograms.enabledCartogramIndex)
-
   map.pushMode(MAP_MODE_CARTOGRAMS)
-  if (currentCartogramIndex) map.setLayoutProperty(buildCartogramLayerId(currentCartogramIndex), 'visibility', 'none')
+  if (!R.isNil(currentCartogramIndex)) {
+    map.setLayoutProperty(buildCartogramLayerId(currentCartogramIndex), 'visibility', 'none')
+  }
   map.setLayoutProperty(buildCartogramLayerId(index), 'visibility', 'visible')
+  yield put(setCartogramDone(index))
 }
 
 function* cartogramClear() {
@@ -55,7 +57,7 @@ function* initializeLayers() {
 
 export default function* saga() {
   yield [
-    takeEvery(CARTOGRAM_SET, cartogramSet),
+    takeEvery(CARTOGRAM_SET_PREPARATION, cartogramSet),
     takeEvery(CARTOGRAM_CLEAR, cartogramClear),
     takeEvery(MAP_LOADED, initializeLayers)
   ]

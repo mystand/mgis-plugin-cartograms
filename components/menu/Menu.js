@@ -28,7 +28,7 @@ class Menu extends React.Component {
   }
 
   render() {
-    const { items, currentItemIndex, setCartogram, clearCartogram } = this.props
+    const { items, currentItemIndex, setCartogramPreparation, clearCartogram } = this.props
     const { opened } = this.state
     const classNames = classnames(styles.root, { opened })
 
@@ -46,7 +46,7 @@ class Menu extends React.Component {
             {
               items.map((item, index) => {
                 const isActive = index === currentItemIndex
-                const onClick = isActive ? () => clearCartogram(index) : () => setCartogram(index)
+                const onClick = isActive ? () => clearCartogram(index) : () => setCartogramPreparation(index)
                 // key={index} можно использовать, потому что items - это константа
                 return (
                   <li key={ index } onClick={ onClick }>
@@ -68,7 +68,7 @@ Menu.propTypes = {
     name: PropTypes.string
   })),
   currentItemIndex: PropTypes.number,
-  setCartogram: PropTypes.func.isRequired,
+  setCartogramPreparation: PropTypes.func.isRequired,
   clearCartogram: PropTypes.func.isRequired
 }
 

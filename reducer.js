@@ -1,4 +1,4 @@
-import { CARTOGRAM_SET, CARTOGRAM_CLEAR } from './actions'
+import { CARTOGRAM_SET_DONE, CARTOGRAM_CLEAR } from './actions'
 
 const defaultState = {
   enabledCartogramIndex: null
@@ -6,7 +6,7 @@ const defaultState = {
 
 export default function (state = defaultState, action) {
   switch (action.type) {
-  case CARTOGRAM_SET: {
+  case CARTOGRAM_SET_DONE: {
     const { index } = action
     return { ...state, enabledCartogramIndex: index }
   }
