@@ -73,6 +73,6 @@ Menu.propTypes = {
 }
 
 export default connect(state => ({
-  items: state.pluginConfigs.cartograms.items,
+  items: state.pluginConfigs.cartograms.items.filter(item => state.layers[item.layer] != null),
   currentItemIndex: state.plugins.cartograms.enabledCartogramIndex
 }), dispatch => bindActionCreators(actions, dispatch))(Menu)

@@ -17,6 +17,10 @@ function buildStops(stopsConfig) {
 export function buildMapboxLayers(layers, config) {
   return config.items.map((item, index) => {
     const layer = layers[item.layer]
+    if (layer == null) {
+      console.warn(`Layer '${item.layer}' for cartogram '${item.name}' not found`)
+      return null
+    }
 
     switch (layer.geometry_type) {
 
@@ -76,5 +80,5 @@ export function buildMapboxLayers(layers, config) {
     default:
       throw new Error(`Unexpected layer geometry type: ${layer.geometry_type}`)
     }
-  })
+  }).filter(R.identity)
 }

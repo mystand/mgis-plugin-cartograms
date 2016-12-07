@@ -4,5 +4,6 @@ export const currentCartogramSelector = createSelector(
   state => state.pluginConfigs.cartograms,
   state => state.plugins.cartograms.enabledCartogramIndex,
 
-  (config, enabledCartogramIndex) => config.items[enabledCartogramIndex] || null
+  // todo добавить значения по умолчанию и убрать "|| []"
+  (config, enabledCartogramIndex) => (config.items || [])[enabledCartogramIndex] || null
 )
