@@ -17,37 +17,46 @@ const Popup = (props) => {
 
   return (
     <div className={ styles.root }>
-      <div className={ styles.header }> Объекты картограммы </div>
-      <ul>
-        {
-          cartogramFeatures.map((feature) => {
-            const value = feature.properties[currentCartogram.property]
-            const onClick = () => push(`/${feature.properties.layer_key}/${feature.id}`)
-            sum += value
+      {
+        cartogramFeatures &&
+        <div className={ styles.listBlock }>
+          <div className={ styles.header }> Объекты картограммы</div>
+          <ul>
+            {
+              cartogramFeatures.map((feature) => {
+                const value = feature.properties[currentCartogram.property]
+                const onClick = () => push(`/${feature.properties.layer_key}/${feature.id}`)
+                sum += value
 
-            return (
-              <li key={ feature.id } className={ styles.featureListItem } onClick={ onClick }>
-                {feature.properties.name}: <b>{R.isNil(value) ? 'Нет данных' : value}</b>
-              </li>
-            )
-          })
-        }
-        { (features.length > 1) && <li>Всего: <b>{sum}</b></li> }
-      </ul>
-
-      <div className={ styles.header }> Остальные объекты </div>
-      <ul>
-        {
-          otherFeatures.map((feature) => {
-            const onClick = () => push(`/${feature.properties.layer_key}/${feature.id}`)
-            return (
-              <li key={ feature.id } className={ styles.featureListItem } onClick={ onClick }>
-                {feature.properties.name}
-              </li>
-            )
-          })
-        }
-      </ul>
+                return (
+                  <li key={ feature.id } className={ styles.featureListItem } onClick={ onClick }>
+                    {feature.properties.name}: <b>{R.isNil(value) ? 'Нет данных' : value}</b>
+                  </li>
+                )
+              })
+            }
+            { (features.length > 1) && <li>Всего: <b>{sum}</b></li> }
+          </ul>
+        </div>
+      }
+      {
+        otherFeatures &&
+        <div className={ styles.listBlock }>
+          <div className={ styles.header }> Остальные объекты</div>
+          <ul>
+            {
+              otherFeatures.map((feature) => {
+                const onClick = () => push(`/${feature.properties.layer_key}/${feature.id}`)
+                return (
+                  <li key={ feature.id } className={ styles.featureListItem } onClick={ onClick }>
+                    {feature.properties.name}
+                  </li>
+                )
+              })
+            }
+          </ul>
+        </div>
+      }
     </div>
   )
 }
