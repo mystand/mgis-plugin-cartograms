@@ -17,38 +17,42 @@ function buildFieldsOptions(formOptions) {
 }
 
 export default {
-  name: 'Картограммы',
-  options: [
-    {
-      key: 'items',
-      label: 'Картограммы',
-      type: 'array',
-      item: {
-        fields: [
-          { key: 'name', label: 'Название', type: 'string' },
-          { key: 'layer', label: 'Слой', type: 'select', options: 'layers' },
-          { key: 'property', label: 'Поле (только с типом Number)', type: 'select', options: buildFieldsOptions },
-          {
-            key: 'colorStops',
-            label: 'Цветовая схема',
-            type: 'array',
-            item: {
-              fields: [
-                { key: 'value', label: 'Значение', type: 'number' },
-                { key: 'color', label: 'Цвет (формат: "#ffffff")', type: 'string' }
-              ]
+  form: {
+    fields: [
+      {
+        key: 'items',
+        label: 'Картограммы',
+        input: 'array',
+        item: {
+          fields: [
+            { key: 'name', label: 'Название', input: 'string' },
+            { key: 'layer', label: 'Слой', input: 'select', inputOptions: { options: 'layers' } },
+            {
+              key: 'property',
+              label: 'Поле (только с типом Number)',
+              input: 'select',
+              inputOptions: { options: buildFieldsOptions }
+            },
+            {
+              key: 'colorStops',
+              label: 'Цветовая схема',
+              input: 'array',
+              item: {
+                fields: [
+                  { key: 'value', label: 'Значение', input: 'number' },
+                  { key: 'color', label: 'Цвет (формат: "#ffffff")', input: 'string' }
+                ]
+              }
             }
-          }
-        ]
+          ]
+        }
       }
-    }
+    ]
+  },
+  components: [
+    { component: Legend, position: 'mapCustom' },
+    { component: Menu, position: 'mapCustom' }
   ],
-  connects: {
-    components: [
-      { component: Legend, position: 'mapCustom' },
-      { component: Menu, position: 'mapCustom' }
-    ],
-    saga,
-    reducer
-  }
+  saga,
+  reducer
 }

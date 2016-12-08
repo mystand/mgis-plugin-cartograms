@@ -1,7 +1,13 @@
+import { MAP_REMOVED } from 'core/frontend/client/map/map-actions'
+
 import { CARTOGRAM_SET_DONE, CARTOGRAM_CLEAR } from './actions'
 
 const defaultState = {
   enabledCartogramIndex: null
+}
+
+function clearCartogram(state) {
+  return { ...state, enabledCartogramIndex: null }
 }
 
 export default function (state = defaultState, action) {
@@ -12,7 +18,11 @@ export default function (state = defaultState, action) {
   }
 
   case CARTOGRAM_CLEAR: {
-    return { ...state, enabledCartogramIndex: null }
+    return clearCartogram(state)
+  }
+
+  case MAP_REMOVED: {
+    return clearCartogram(state)
   }
 
   default:
