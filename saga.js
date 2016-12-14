@@ -51,7 +51,8 @@ function* initializeLayers() {
     config: state.pluginConfigs.cartograms
   }))
 
-  buildMapboxLayers(layers, config).forEach(layer => map.addLayer(layer))
+  const firstPolygonLayer = map.getStyle().layers.find(x => x.type === 'fill') || {}
+  buildMapboxLayers(layers, config).forEach(layer => map.addLayer(layer, firstPolygonLayer.id))
   map.on('click', onMapClick)
 }
 
