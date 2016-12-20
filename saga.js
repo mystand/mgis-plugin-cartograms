@@ -10,6 +10,7 @@ import { buildCartogramLayerId, buildMapboxLayers } from './utils'
 import Popup from './components/popup/Popup'
 
 const MAP_MODE_CARTOGRAMS = 'cartograms'
+const MAP_MODE_DEFAULT = 'default'
 const POPUP_KEY = 'cartograms'
 
 function* cartogramSet(action) {
@@ -33,6 +34,7 @@ function* cartogramClear() {
   for (let i = 0; i < config.items.length; i += 1) {
     map.setLayoutProperty(buildCartogramLayerId(i), 'visibility', 'none')
   }
+  map.pushMode(MAP_MODE_DEFAULT)
 }
 
 function onMapClick(e) {
